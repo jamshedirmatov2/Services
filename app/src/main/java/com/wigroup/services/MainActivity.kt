@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.wigroup.services.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +65,15 @@ class MainActivity : AppCompatActivity() {
         }
         binding.jobIntentService.setOnClickListener {
             MyJobIntentService.enqueue(this, page++)
+        }
+        binding.workManager.setOnClickListener {
+            WorkManager
+                .getInstance(applicationContext)
+                .enqueueUniqueWork(
+                    MyWorker.WORK_NAME,
+                    ExistingWorkPolicy.APPEND,
+                    MyWorker.makeRequest(page++)
+                )
         }
     }
 }
