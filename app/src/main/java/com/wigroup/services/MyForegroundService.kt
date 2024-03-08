@@ -36,6 +36,7 @@ class MyForegroundService : Service() {
             for (i in 0 until 100) {
                 delay(1000)
                 println("Timer: $i")
+//                stopSelf()
             }
         }
         return START_STICKY
